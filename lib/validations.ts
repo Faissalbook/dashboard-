@@ -84,8 +84,8 @@ export const checkoutPaymentSchema = z.object({
   cardName: z.string().min(2, "Enter the name on the card"),
   cardNumber: z
     .string()
-    .regex(/^\d{13,19}$/, "Enter a valid card number")
-    .transform((v) => v.replace(/\s+/g, "")),
+    .transform((v) => v.replace(/\s+/g, ""))
+    .pipe(z.string().regex(/^\d{13,19}$/, "Enter a valid card number")),
   expiry: z.string().regex(/^(0[1-9]|1[0-2])\/\d{2}$/, "Use MM/YY format"),
   cvc: z.string().regex(/^\d{3,4}$/, "Enter a valid CVC"),
   billingSameAsShipping: z.boolean(),

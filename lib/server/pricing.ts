@@ -1,6 +1,6 @@
 import { getProductById } from "@/lib/data/products";
 import { getCouponByCode } from "@/lib/data/coupons";
-import { computeDiscount } from "@/store/cart-store";
+import { computeDiscount } from "@/lib/pricing";
 import { seededRandom } from "@/lib/data/prng";
 
 export interface CartLineInput {
