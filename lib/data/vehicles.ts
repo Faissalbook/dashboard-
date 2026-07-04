@@ -207,7 +207,7 @@ export function getAvailableYears() {
   return years;
 }
 
-export function getMakesForYear(_year: number) {
+export function getMakesForYear() {
   return vehicleMakes.map(({ id, name }) => ({ id, name }));
 }
 
