@@ -207,6 +207,7 @@ export interface BlogPost {
   readMinutes: number;
   publishedAt: string;
   coverGradient: string;
+  content: string[];
 }
 
 export type SortOption =

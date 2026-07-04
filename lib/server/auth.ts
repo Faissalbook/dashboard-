@@ -50,6 +50,10 @@ export function findUserByEmail(email: string) {
   return getUsers().get(email.toLowerCase());
 }
 
+export function listUsers() {
+  return Array.from(getUsers().values()).map(toPublicUser);
+}
+
 export function createUser(name: string, email: string, password: string) {
   const users = getUsers();
   if (users.has(email.toLowerCase())) {

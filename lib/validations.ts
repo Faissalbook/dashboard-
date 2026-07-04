@@ -105,6 +105,28 @@ export const couponSchema = z.object({
 });
 export type CouponInput = z.infer<typeof couponSchema>;
 
+export const adminProductSchema = z.object({
+  name: z.string().min(3, "Enter a product name"),
+  brandId: z.string().min(1, "Select a brand"),
+  categoryId: z.string().min(1, "Select a category"),
+  price: z.number().positive("Enter a valid price"),
+  stock: z.number().int().min(0, "Stock cannot be negative"),
+  width: z.number().int().positive("Enter a valid width"),
+  aspectRatio: z.number().int().positive("Enter a valid aspect ratio"),
+  diameter: z.number().int().positive("Enter a valid diameter"),
+});
+export type AdminProductInput = z.infer<typeof adminProductSchema>;
+
+export const adminCouponSchema = z.object({
+  code: z.string().min(3, "Enter a coupon code").toUpperCase(),
+  description: z.string().min(3, "Enter a description"),
+  type: z.enum(["percentage", "fixed", "free-shipping"]),
+  value: z.number().min(0, "Enter a valid value"),
+  minSubtotal: z.number().min(0, "Enter a valid minimum"),
+  expiresAt: z.string().min(1, "Select an expiration date"),
+});
+export type AdminCouponInput = z.infer<typeof adminCouponSchema>;
+
 export const contactSchema = z.object({
   name: z.string().min(2, "Enter your name"),
   email: z.string().email("Enter a valid email address"),

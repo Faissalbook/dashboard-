@@ -6,6 +6,7 @@ import { ShieldCheck, Sparkles, Truck } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TireSizeSearch } from "@/components/search/tire-size-search";
 import { VehicleSearchWidget } from "@/components/search/vehicle-search-widget";
+import { parseAccentText, useCmsStore } from "@/store/cms-store";
 
 const TRUST_POINTS = [
   { icon: Truck, label: "Free shipping over $150" },
@@ -14,6 +15,11 @@ const TRUST_POINTS = [
 ];
 
 export function Hero() {
+  const heroEyebrow = useCmsStore((s) => s.heroEyebrow);
+  const heroHeadline = useCmsStore((s) => s.heroHeadline);
+  const heroSubheadline = useCmsStore((s) => s.heroSubheadline);
+  const headlineParts = parseAccentText(heroHeadline);
+
   return (
     <section className="dark relative overflow-hidden bg-background text-foreground">
       <div className="pointer-events-none absolute inset-0">
@@ -29,15 +35,20 @@ export function Hero() {
           className="space-y-6"
         >
           <span className="border-ember/40 text-ember inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold tracking-wide uppercase">
-            <Sparkles className="size-3.5" /> New Season Arrivals
+            <Sparkles className="size-3.5" /> {heroEyebrow}
           </span>
           <h1 className="font-display text-4xl leading-[1.05] font-bold text-balance sm:text-5xl lg:text-6xl">
-            Premium tires, <span className="text-ember">precisely</span> matched to your ride.
+            {headlineParts.map((part, i) =>
+              part.accent ? (
+                <span key={i} className="text-ember">
+                  {part.text}
+                </span>
+              ) : (
+                <span key={i}>{part.text}</span>
+              ),
+            )}
           </h1>
-          <p className="text-muted-foreground max-w-lg text-base sm:text-lg">
-            Search by exact size or your vehicle, compare lab-tested performance ratings, and
-            schedule professional installation — all without leaving the page.
-          </p>
+          <p className="text-muted-foreground max-w-lg text-base sm:text-lg">{heroSubheadline}</p>
           <div className="flex flex-wrap gap-x-6 gap-y-3 pt-2">
             {TRUST_POINTS.map((point) => (
               <div key={point.label} className="text-muted-foreground flex items-center gap-2 text-sm">
