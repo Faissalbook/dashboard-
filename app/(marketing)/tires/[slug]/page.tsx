@@ -48,8 +48,32 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const related = getRelatedProducts(product);
   const sizeLabel = `${product.spec.width}/${product.spec.aspectRatio}R${product.spec.diameter}`;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description,
+    sku: product.sku,
+    brand: { "@type": "Brand", name: brand?.name },
+    aggregateRating:
+      product.reviewCount > 0
+        ? {
+            "@type": "AggregateRating",
+            ratingValue: product.rating,
+            reviewCount: product.reviewCount,
+          }
+        : undefined,
+    offers: {
+      "@type": "Offer",
+      priceCurrency: product.currency,
+      price: product.price,
+      availability: product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+    },
+  };
+
   return (
     <div className="container-edge py-8">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Breadcrumbs
         items={[
           { label: "Shop Tires", href: "/tires" },
